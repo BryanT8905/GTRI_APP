@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use Illuminate\Http\Request;
+use App\Models\User;
 use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 
@@ -82,5 +84,16 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         //
+    }
+
+    public function getRoles($user_id)
+    {
+        return User::find($user_id)->roles;
+    }
+
+    // To get all users by role
+    public function getUsers($role_id)
+    {
+        return Role::find($role_id)->users;
     }
 }

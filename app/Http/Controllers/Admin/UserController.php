@@ -63,7 +63,7 @@ class UserController extends Controller
     {
         
         //validate user information using validate method on request
-        $request->validate([
+         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:20', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
