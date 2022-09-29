@@ -1,3 +1,4 @@
+<!--Page view for creating a user-->
 @extends('layout.app')
 
 @section('content')
@@ -5,10 +6,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Create New User') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('users.store') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -39,16 +40,18 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Username') }}</label>
+                        <div class="row mb-3">
+                            <label for="name" class="col-md-4 pb-4 col-form-label text-md-end">{{ __('Username') }}</label>
+
                             <div class="col-md-6">
                                 <input id="username" type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
-                                @if ($errors->has('username'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('username') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
+
+                                @error('username')
+                                <span class="help-block">
+                                    <strong>{{ ('username') }}</strong>
+                                </span>
+                                @enderror      
+                        </div>
 
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
@@ -70,14 +73,21 @@
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
-            
                         </div>
-                    
+                        <div class="col-md-6 offset-md-4 mb-3">
+                            @foreach($roles as $role)
+                                <div class="form-check">
+                                    <input class="form-check-input" name="roles[]" type="checkbox" value="{{ $role->id}}" id="{{$role->name}}">
+                                    <label class="form-check-label" for="{{$role->name}}">{{$role->name}}</label>
+                                </div>
+                            @endforeach
+                        </div>
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
+                                    {{ __('Create') }}
                                 </button>
+                                <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
                             </div>
                         </div>
                     </form>

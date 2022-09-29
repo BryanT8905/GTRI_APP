@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,15 +20,15 @@ use App\Http\Controllers\Auth\RegisterController;
 
 
 
-Route::get('/users', function () {
-    return view('users.index');
-});
 
 Route::get('/register', [RegisterController::class, 'index']);
 
-Route::get('/logout', [LogoutController::class, 'logout_user'])->name('logout');
+Route::get('/logout', [LoginController::class, 'logout']);
 
+/*if user registration is not needed in app we can disable in Auth::routes() */
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+//Create resource route since user management is a crud functionality(create,delete etc.)
+Route::resource('admin/users', UserController::class);

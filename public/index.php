@@ -1,4 +1,5 @@
 <?php
+/*this file is the entry point for all requests entering the app*/
 
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
