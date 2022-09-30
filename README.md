@@ -1,25 +1,26 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# IT Management System
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Getting Started
 
-## About Laravel
+1. Clone or download the repository
+2. Move into the project directory
+3. Install laravel dependencies using ``composer install``
+4. Install npm dependencies using "npm install"
+5. Copy ``.env.example `` file to ``.env`` on the root folder
+6. Open your .env file and change the database name (DB_DATABASE) to your database name, username (DB_USERNAME) and password (DB_PASSWORD) field correspond to your configuration.
+7. Generate app encryption key using ``php artisan key:generate``
+8. Run ``php storage:link``  to connect public folder to storage folder
+9. Generate users and admin using ``php artisan db:seed``
+ - email: admin@example.com
+ - username: admin1
+ - password: password
+10. Run ``php artisan serve`` to display the project
+11. Run ``npm run dev`` to compile CSS and JavaScript
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Application Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- There is no registration form. Admin can only register users inside of the application
+- Has Multi-Authentication...Admin Authentication and User Authentication
 
 ## Learning Laravel
 
