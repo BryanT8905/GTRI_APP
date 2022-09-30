@@ -5,7 +5,7 @@
 1. Clone or download the repository
 2. Move into the project directory
 3. Install laravel dependencies using ``composer install``
-4. Install npm dependencies using "npm install"
+4. Install npm dependencies using ``npm install``
 5. Copy ``.env.example `` file to ``.env`` on the root folder
 6. Open your .env file and change the database name (DB_DATABASE) to your database name, username (DB_USERNAME) and password (DB_PASSWORD) field correspond to your configuration.
 7. Generate app encryption key using ``php artisan key:generate``
