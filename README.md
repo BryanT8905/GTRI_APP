@@ -9,7 +9,7 @@
 5. Copy ``.env.example `` file to ``.env`` on the root folder
 6. Open your .env file and change the database name (DB_DATABASE) to your database name, username (DB_USERNAME) and password (DB_PASSWORD) field to correspond to your configuration.
 7. Generate app encryption key using ``php artisan key:generate``
-8. Run ``php storage:link``  to connect public folder to storage folder
+8. Run ``php artisan storage:link``  to connect public folder to storage folder
 9. Generate users and admin using ``php artisan db:seed``
  - email: admin@example.com
  - username: admin1
