@@ -20,6 +20,10 @@
                 <div class="px-1">
                 <img class="image rounded-circle" src="{{asset('/storage/images/'.Auth::user()->image)}}" alt="profile_image" style="width: 70px;height: 70px; padding: 10px; margin: 0px; ">
                 </div>
+                @else
+                <div class="px-1">
+                <img class="image rounded-circle" src="{{asset('img/user.png')}}" alt="profile_image" style="width: 70px;height: 70px; padding: 10px; margin: 0px; ">
+                </div>
             @endif
                     @auth
                         <div class="dropdown pt-3">
@@ -40,9 +44,6 @@
                     @else
                         <a href="{{ route('login') }}" class=" text-white text-sm text-gray-500 underline">Login</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class=" ps-2 text-white ml-4 text-sm  underline">Register</a>
-                        @endif
                     @endif
                     
                 </div>

@@ -8,31 +8,48 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Yajra\DataTables\DataTables;
 
 
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource and 
+     *   determines authorization depending on whether the user is an admin or user
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    
+    public function index(Request $request)
     {
         
         if(Gate::allows('isAdmin')){
-            $users = User::paginate(10);
-
-            return view('admin.users.index')->with(['users'=>$users]);
+            if ($request->ajax()) {
+                $data = User::select('id','name','username','email')->get();
+                return Datatables::of($data)->addIndexColumn()
+                    ->addColumn('action', function($row){
+                        $btn = '<a href="'.route("users.edit", $row->id).' "data-toggle="tooltip" data-id="'.
+                        $row->id.'" data-original-title="Edit" class=" edit btn  btn-primary btn-sm editUser">Edit</a>';
+                        $btn.='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.
+                        $row->id.'" data-original-title="Delete" class=" delete btn  btn-sm btn-danger deleteUser">Delete</a>';
+                        return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+            }
+            return view('admin.users.index');    
 
         }
     }
+
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -41,7 +58,7 @@ class UserController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new resource. 
      *
      * @return \Illuminate\Http\Response
      */
@@ -75,9 +92,7 @@ class UserController extends Controller
         $user->roles()->sync($request->roles);
         $request->session()->flash('success', 'User created!'); 
         return redirect(route('users.index'));
-
        
-        
     }
 
    
@@ -107,7 +122,7 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified resource in storage and redirects to the users table.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -129,10 +144,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Request $request)
-    {
-        User::destroy($id);
-        $request->session()->flash('success', 'User deleted!');
-        return redirect(route('users.index'));
+    public function destroy(Request $request, $id)
+    {   $request->session()->flash('success', 'User deleted!');
+        User::find($id)->delete();
+        
+    
+        
     }
 }

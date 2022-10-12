@@ -27,6 +27,9 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('isAdmin', function($user){
             return $user->hasRole('admin');
+            
+            //to determine if a user has more than one role use the following
+            //return $user->hasRoles(['admin', manager]);
         });
     }
 }

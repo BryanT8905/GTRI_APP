@@ -17,15 +17,16 @@ class userSeeder extends Seeder
      */
     public function run()
     {
-        //User::factory()->times(10)->create();
+        //create 50 users
+        User::factory()->times(50)->create();
         $password = 'password';
 
+        //create an admin
         DB::table('users')->insert([
             'name' => 'admin',
             'username' => 'admin1',
             'email' => 'admin@example.com',
-            'password' => Hash::make($password),
-            'image' => 'user.png'
+            'password' => Hash::make($password)
         ]);
     }
 }

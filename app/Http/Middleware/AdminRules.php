@@ -17,7 +17,7 @@ class AdminRules
      */
     public function handle(Request $request, Closure $next)
     {
-        
+      //we can use this custom middleware to apply to adminroute group  
         if(Gate::allows('isAdmin')){
             
            return $next($request);

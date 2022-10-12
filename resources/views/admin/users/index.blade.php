@@ -3,58 +3,118 @@
 
 @section('content')
 
-    <div class="pt-5 pb-5 align-items-center justify-content-center d-flex" style= "width: 40%;">
-    <!-- create user button -->
-    <a href="{{ route('users.create')}}" class="btn btn-info float-start" role="button">Create User</a>  
-    </div>
-    
-    <!-- create table -->
-    <div class=" container align-items-center justify-content-center d-flex ">
-        <table style= "width: 100%;" class="table table-striped table-responsive-lg ">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">User_Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">UserName</th>
-                    <th scope="col">Email</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- add mySQL data to table -->
-                @foreach($users as $user)
-                 <tr>
-                    <th scope="row" >{{$user->id}}</th>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->username}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info" role="button">Edit</a>
-                    </td>
-                    
-                    <!--delete user, confirm before delete-->
-                    <td class="col-lg-1">
-                        <button class="btn btn-sm btn-danger btn-danger btn-flat show_confirm" data-toggle="tooltip" 
-                        onclick="confirm('Are you sure you want to remove the user from this group?') || e.stopImmediatePropagation(); 
-                        document.getElementById('delete-user-{{$user->id}}').submit()">Delete</button>
-                            <form id="delete-user-{{$user->id}}" action="{{ route('users.destroy', $user->id)}}" method="POST"
-                                style="display:none">
-                                @csrf
-                                @method("DELETE")
-                               
-                            </form>
-                        </td>
-                    </tr>
-                 @endforeach
-            </tbody>
-        </table>
+<!-- Button trigger modal -->
 
+
+
+    
+<div class="pt-5 pb-5 align-items-center justify-content-center d-flex" style= "width: 40%;">  
+</div>
+<div class="container">
+<!-- create user button -->
+
+<a data-toggle="modal" id="userButton" data-target="#userModal" data-attr="{{ route('users.create')}}" title="create" class="btn btn-success " role="button">Create User</a>  
+
+</button> 
+    <div class="row pt-5">
+        <div class="col-12">
+            <table class="table dt-responsive table-striped user_datatable ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th width="100px">Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <div class="pt-5 pb-5 align-items-center justify-content-center w-100 d-flex">
-         <!--pagination -->
-        {{ $users->links() }}
-        </div>
-       
-     
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-user modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New User</h5>
+      </div>
+      <div class="modal-body" id="userBody">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AJAX calls to populate datatable and delete user -->
+<script type="text/javascript">
+  $(function () {
+    $.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
+    let table = $('.user_datatable').DataTable({
+        responsive:true,
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('users.index') }}",
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+            {data: 'username', name: 'username'},
+            {data: 'email', name: 'email'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+    });
+  $(document).on('click', '#userButton', function(event) {
+            event.preventDefault();
+            let href = $(this).attr('data-attr');
+            $.ajax({
+                url: href,
+                beforeSend: function() {
+                    $('#loader').show();
+                },
+                // return the result
+                success: function(result) {
+                    $('#userModal').modal("show");
+                    $('#userBody').html(result).show();
+                    
+                },
+                complete: function() {
+                    $('#loader').hide();
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    alert("Page " + href + " cannot open. Error:" + error);
+                    $('#loader').hide();
+                },
+                timeout: 8000
+            })
+        });
+    $('body').on('click','.deleteUser', function(){
+        let user_id = $(this).data("id");
+        let token = $("meta[name='csrf-token']").attr("content");
+        if(confirm("Are you sure you want to delete this user?")==true){
+            $.ajax({
+            type:"post",
+            url: "{{ route('users.store') }}"+'/'+user_id,
+            data: {
+                _token: token,
+                _method: 'DELETE',
+                id: user_id,
+            },
+
+            success:function(data){
+                table.draw();
+                
+            }
+            
+        })
+        } 
+    });
+});  
+</script>
 @endsection
 

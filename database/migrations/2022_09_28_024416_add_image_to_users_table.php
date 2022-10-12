@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
                 if (!Schema::hasColumn('users', 'image')){
-                  $table->string('image')->default('user.png');
+                  $table->string('image')->nullable();
                 };
         });
     }
