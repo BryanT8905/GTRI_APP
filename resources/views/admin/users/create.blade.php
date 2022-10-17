@@ -1,77 +1,74 @@
 
 
 <!--Page view for creating a user-->
+    <div>
+        <h4 class="d-flex justify-content-left mt-0 pb-2"> Create New User</h4>
+    </div>
+    <form method="POST" action="{{ route('users.store') }}" id="create">
+        @csrf
 
-                    <form method="POST" action="{{ route('users.store') }}">
-                        @csrf
+        <div class="form-outline mb-4">
+                <input id="name" type="text" placeholder="Name" class="form-control form-control-md @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                @error('name')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+        </div>
 
-                        <div class="row mb-3 d-flex justify-content-center h-100">
-                            <div class="col-md-6 col-12">
-                                <input id="name" type="text" placeholder="Name"  class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+        <div class="form-outline mb-4">
+                <input id="email" type="email" placeholder="Email" class="form-control form-control-md @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                @error('email')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+        </div>
 
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+        <div class="form-outline mb-4">
+                <input id="username" type="text" placeholder="Username" class="form-control @error('password') is-invalid @enderror" name="username" value="{{ old('username') }}" required autofocus>
+                @error('username')
+                <span class="help-block">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror      
+        </div>
 
-                        <div class="row mb-3 d-flex justify-content-center h-100">
-                            <div class="col-md-6">
-                                <input id="email" type="email" placeholder="Email"  class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+        <div class="form-outline mb-4">
+                <input id="department" type="text" placeholder="Department" class="form-control @error('department') is-invalid @enderror" name="department" value="{{ old('department') }}" required autofocus>
+                @error('department')
+                <span class="help-block">
+                    <strong>{{ $message }}</strong>
+                </span>
+                @enderror      
+        </div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+        <div class="form-outline mb-4">
+                <input id="password" type="password" placeholder="Password" class="form-control @error('password') is-invalid @enderror" name="password" required minlength="8" autocomplete="new-password">
 
-                        <div class="row mb-3 d-flex justify-content-center h-100">
-                            <div class="col-md-6">
-                                <input id="username" placeholder="username"  type="text" class="form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="username" value="{{ old('username') }}" required autofocus>
+                @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+        </div>
 
-                                @error('username')
-                                <span class="help-block">
-                                    <strong>{{ ('username') }}</strong>
-                                </span>
-                                @enderror      
-                        </div>
-
-                        <div class="row d-flex justify-content-center h-100 mb-3 mt-3">
-                            <div class="col-md-6">
-                                <input id="password" placeholder="Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row d-flex justify-content-center h-100 mb-3">
-                            <div class="col-md-6">
-                                <input id="password-confirm"  placeholder="Confirm Password" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-                        <div class="col-md-6 offset-md-4 mb-3">
-                            @foreach($roles as $role)
-                                <div class="form-check">
-                                    <input class="form-check-input" name="roles[]" type="checkbox" value="{{ $role->id}}" id="{{$role->name}}">
-                                    <label class="form-check-label" for="{{$role->name}}">{{$role->name}}</label>
-                                </div>
-                            @endforeach
-                        </div>
-                        <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('Create') }}
-                        </button>
-                        <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancel</a>
-                        </div>
-                        
-                    </form>
-          
+        <div class="form-outline mb-4">
+                <input id="password-confirm"  type="password"  placeholder="Confirm Password"class="form-control" name="password_confirmation" required autocomplete="new-password">
+        </div>
+        <div class="col-md-6 mb-4">
+            @foreach($roles as $role)
+                <div class="form-check">
+                    <input class="form-check-input" name="roles[]" type="checkbox" value="{{ $role->id}}" id="{{$role->name}}">
+                    <label class="form-check-label" for="{{$role->name}}">{{$role->name}}</label>
+                </div>
+            @endforeach
+        </div>
+        <div class="col-xl-6 mt-3 mb-0">
+            <button type="submit" class="btn btn-primary btn-md btn-block mx-2 " id="submitForm">
+                {{ __('Create User') }}
+            </button>
+        </div>
+        
+    </form>
 

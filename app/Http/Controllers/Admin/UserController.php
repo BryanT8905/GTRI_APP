@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 
@@ -26,13 +27,13 @@ class UserController extends Controller
         
         if(Gate::allows('isAdmin')){
             if ($request->ajax()) {
-                $data = User::select('id','name','username','email')->get();
+                $data = User::select('id','name','username','email','department')->get();
                 return Datatables::of($data)->addIndexColumn()
                     ->addColumn('action', function($row){
-                        $btn = '<a href="'.route("users.edit", $row->id).' "data-toggle="tooltip" data-id="'.
-                        $row->id.'" data-original-title="Edit" class=" edit btn  btn-primary btn-sm editUser">Edit</a>';
+                        $btn = '<a data-attr="'.route("users.edit", $row->id).' "data-toggle="modal"  data-targer="#userModal" data-id="'.
+                        $row->id.'" data-original-title="Edit" class="edit btn px-1 mx-1 btn-primary btn-sm editUser">Edit</a>';
                         $btn.='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.
-                        $row->id.'" data-original-title="Delete" class=" delete btn  btn-sm btn-danger deleteUser">Delete</a>';
+                        $row->id.'" data-original-title="Delete" class=" delete btn px-1 btn-sm btn-danger deleteUser">Delete</a>';
                         return $btn;
                     })
                     ->rawColumns(['action'])
@@ -80,18 +81,27 @@ class UserController extends Controller
     {
         
         //validate user information using validate method on request
-         $request->validate([
+        $validator=Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:20', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'department' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+
+        if ($validator->fails()) {
+            
+            return response(['success' => false, 'message' => $validator->errors()],422);
+            
+
+        }
         
         //create new user & exclude csrf token and roles. Since they are not in the users table
         $user = User::create($request->except(['_token', 'roles']));
         $user->roles()->sync($request->roles);
         $request->session()->flash('success', 'User created!'); 
-        return redirect(route('users.index'));
+        
+        return redirect()->route('users.index');
        
     }
 
@@ -136,6 +146,8 @@ class UserController extends Controller
         $user->roles()->sync($request->roles);
 
         return redirect(route('users.index'));
+
+        
     }
 
     /**

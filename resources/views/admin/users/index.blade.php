@@ -1,31 +1,29 @@
-<!--This is the main user managemnt page view which shows the users table-->
+<!--This is the main user management page view which shows the users table-->
 @extends('layout.app')
 
 @section('content')
 
-<!-- Button trigger modal -->
+<div id="indexPage" class="h-100 px-3  indexPageExpanded " style="padding-top:110px ;">
 
-
-
-    
-<div class="pt-5 pb-5 align-items-center justify-content-center d-flex" style= "width: 40%;">  
+<div class="d-sm-flex mb-4"> 
+<h3>Current Users</h3> 
 </div>
-<div class="container">
+<div >
 <!-- create user button -->
+<a data-toggle="modal" id="userButton" data-target="#userModal" data-attr="{{ route('users.create')}}" data-original-title="create" class="btn btn-success btn-xl " role="button">Create User</a>
 
-<a data-toggle="modal" id="userButton" data-target="#userModal" data-attr="{{ route('users.create')}}" title="create" class="btn btn-success " role="button">Create User</a>  
-
-</button> 
-    <div class="row pt-5">
-        <div class="col-12">
-            <table class="table dt-responsive table-striped user_datatable ">
+<!--datatables user table--> 
+    <div class="container row pt-5">
+        <div class="col">
+            <table class="table dt-responsive table-striped user_datatable shadow-sm" style="width:100%;">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
                         <th>Username</th>
                         <th>Email</th>
-                        <th width="100px">Action</th>
+                        <th>Department</th>
+                        <th width="100px py-0 px-3">Action</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -34,22 +32,28 @@
     </div>
 </div>
 
-<!-- Modal -->
+<!-- Modal for creating and editing users. Dynamically loads create and edit forms -->
 <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-user modal-lg" role="document">
+  <div class="modal-dialog bg-light modal-user modal-md" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New User</h5>
+        <button type="button" class="btn btn-secondary btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body" id="userBody">
+      </div>
+      <div class="row mb-5 mx-3">
+        <div class="d-flex justify-content-right ml-5 align-items-right">
+            <button type="button" class="btn btn-outline-secondary btn-md btnCancel" data-bs-dismiss="modal">Cancel</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
+</div>
 
-<!-- AJAX calls to populate datatable and delete user -->
 <script type="text/javascript">
-  $(function () {
+// AJAX call to populate datatable
+$(function () {
     $.ajaxSetup({
     headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -65,25 +69,26 @@
             {data: 'name', name: 'name'},
             {data: 'username', name: 'username'},
             {data: 'email', name: 'email'},
+            {data: 'department', name: 'department'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
+
+
+
+
+
+
+//Ajax call to load the create user modal
   $(document).on('click', '#userButton', function(event) {
             event.preventDefault();
             let href = $(this).attr('data-attr');
             $.ajax({
                 url: href,
-                beforeSend: function() {
-                    $('#loader').show();
-                },
-                // return the result
                 success: function(result) {
                     $('#userModal').modal("show");
                     $('#userBody').html(result).show();
                     
-                },
-                complete: function() {
-                    $('#loader').hide();
                 },
                 error: function(jqXHR, testStatus, error) {
                     console.log(error);
@@ -91,8 +96,42 @@
                     $('#loader').hide();
                 },
                 timeout: 8000
+                
             })
         });
+//Call to load edit user modal        
+        $(document).on('click', '.editUser', function(event) {
+            event.preventDefault();
+            let href = $(this).attr('data-attr');
+            $.ajax({
+                url: href,
+                success: function(result) {
+                    $('#userModal').modal("show");
+                    $('#userBody').html(result).show();
+                    
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    alert("Page " + href + " cannot open. Error:" + error);
+                    
+                },
+                timeout: 8000
+
+            })
+        });
+ //Calls to remove modal backdrop when cancel button and close(x) icon buttton is clicked in the modal       
+        $(document).ready(function(){
+            $('.btnCancel').click(function(){
+                $(".modal-backdrop").remove();
+            });
+        });
+
+        $(document).ready(function(){
+            $('.btn-close').click(function(){
+                $(".modal-backdrop").remove();
+            });
+        });
+ //Ajax call to delete user when delete button is click       
     $('body').on('click','.deleteUser', function(){
         let user_id = $(this).data("id");
         let token = $("meta[name='csrf-token']").attr("content");
@@ -108,13 +147,15 @@
 
             success:function(data){
                 table.draw();
+                swal.fire("User Deleted");
                 
             }
             
         })
         } 
     });
-});  
+});
+
 </script>
 @endsection
 

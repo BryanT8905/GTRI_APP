@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\UserController;
-
+use App\Http\Controllers\User\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,12 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 Route::middleware(['auth', 'auth.isAdmin'])->group(function (){
-    //Create resource route since user management is a crud functionality(create,delete etc.)
+    //Resource route for user management crud functionality(create,delete etc.)
     Route::resource('admin/users', UserController::class);
+
+});
+
+Route::middleware(['auth'])->group(function (){
+    Route::resource('/user', ProfileController::class);
 
 });
