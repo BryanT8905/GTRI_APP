@@ -14,6 +14,21 @@ use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
+    
+       /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+       
+    }
+
+    
+    
     /**
      * Display a listing of the resource and 
      *   determines authorization depending on whether the user is an admin or user
@@ -24,37 +39,21 @@ class UserController extends Controller
     
     public function index(Request $request)
     {
-        
-        if(Gate::allows('isAdmin')){
-            if ($request->ajax()) {
-                $data = User::select('id','name','username','email','department')->get();
-                return Datatables::of($data)->addIndexColumn()
-                    ->addColumn('action', function($row){
-                        $btn = '<a data-attr="'.route("users.edit", $row->id).' "data-toggle="modal"  data-targer="#userModal" data-id="'.
-                        $row->id.'" data-original-title="Edit" class="edit btn px-1 mx-1 btn-primary btn-sm editUser">Edit</a>';
-                        $btn.='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.
-                        $row->id.'" data-original-title="Delete" class=" delete btn px-1 btn-sm btn-danger deleteUser">Delete</a>';
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-            }
-            return view('admin.users.index');    
-
+        if ($request->ajax()) {
+            $data = User::select('id','name','username','email','department')->get();
+            return Datatables::of($data)->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $btn = '<a data-attr="'.route("users.edit", $row->id).' "data-toggle="modal"  data-targer="#userModal" data-id="'.
+                    $row->id.'" data-original-title="Edit" class="edit btn px-1 mx-1 btn-info text-white btn-sm editUser">Edit</a>';
+                    $btn.='<a href="javascript:void(0)" data-toggle="tooltip" data-id="'.
+                    $row->id.'" data-original-title="Delete" class=" delete btn px-1 btn-sm btn-danger deleteUser">Delete</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-    }
-
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-        $this->middleware('auth.isAdmin');
+        return view('admin.users.index');  
+        
     }
 
 
@@ -67,6 +66,7 @@ class UserController extends Controller
     public function create()
     {
         return view('admin.users.create', ['roles' => Role::all()]);
+      
     }
 
     /**
@@ -79,7 +79,7 @@ class UserController extends Controller
      //create new user
     public function store(Request $request)
     {
-        
+
         //validate user information using validate method on request
         $validator=Validator::make($request->all(), [
             'name' => ['required', 'string', 'max:255'],
@@ -102,6 +102,7 @@ class UserController extends Controller
         $request->session()->flash('success', 'User created!'); 
         
         return redirect()->route('users.index');
+
        
     }
 
@@ -129,6 +130,7 @@ class UserController extends Controller
             'roles' => Role::all(),
             'user' => User::find($id)
         ]);
+    
     }
 
     /**
@@ -140,13 +142,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $request->session()->flash('success', 'User updated!');
         $user = User::findOrFail($id);
         $user->update($request->except(['_token', 'roles']));
         $user->roles()->sync($request->roles);
 
         return redirect(route('users.index'));
-
+        
         
     }
 

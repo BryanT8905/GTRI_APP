@@ -66,5 +66,6 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
     }
+
     
 }

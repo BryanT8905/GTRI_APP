@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Tools\AssetController;
+use App\Http\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,18 @@ Route::middleware(['auth', 'auth.isAdmin'])->group(function (){
 });
 
 Route::middleware(['auth'])->group(function (){
-    Route::resource('/user', ProfileController::class);
+    Route::resource('user/profiles', ProfileController::class);
 
 });
+
+Route::middleware(['auth'])->group(function (){
+    Route::resource('tools/assets', AssetController::class);
+
+});
+
+
+
+Route::view('tools/permissions', 'tools.permissions')->middleware('auth');
+
+
+

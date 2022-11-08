@@ -3,17 +3,19 @@
 
 @section('content')
 
-<div id="indexPage" class="h-100 px-3  indexPageExpanded " style="padding-top:110px ;">
+<div id="indexPage" class="mb-5 px-0 py-5 mt-5 indexPageExpanded" >
 
 <div class="d-sm-flex mb-4"> 
 <h3>Current Users</h3> 
 </div>
-<div >
+<div>
 <!-- create user button -->
-<a data-toggle="modal" id="userButton" data-target="#userModal" data-attr="{{ route('users.create')}}" data-original-title="create" class="btn btn-success btn-xl " role="button">Create User</a>
+    <a data-toggle="modal" id="userButton" data-target="#userModal" data-attr="{{ route('users.create')}}" data-original-title="create" class="btn btn-success btn-md mx-2 py-1" role="button">Create User</a>
+    <p class="small px-2 py-3"><a class="text-black"  href="{{ url('permissions') }}" >View Permissions</a></p>
+
 
 <!--datatables user table--> 
-    <div class="container row pt-5">
+    <div class="container row pt-2">
         <div class="col">
             <table class="table dt-responsive table-striped user_datatable shadow-sm" style="width:100%;">
                 <thead>
@@ -60,7 +62,7 @@ $(function () {
     }
     });
     let table = $('.user_datatable').DataTable({
-        responsive:true,
+        responsive: true,
         processing: true,
         serverSide: true,
         ajax: "{{ route('users.index') }}",
@@ -73,10 +75,6 @@ $(function () {
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
-
-
-
-
 
 
 //Ajax call to load the create user modal
@@ -120,17 +118,17 @@ $(function () {
             })
         });
  //Calls to remove modal backdrop when cancel button and close(x) icon buttton is clicked in the modal       
-        $(document).ready(function(){
-            $('.btnCancel').click(function(){
-                $(".modal-backdrop").remove();
-            });
+    $(document).ready(function(){
+        $('.btnCancel').click(function(){
+            $(".modal-backdrop").remove();
         });
+    });
 
-        $(document).ready(function(){
-            $('.btn-close').click(function(){
-                $(".modal-backdrop").remove();
-            });
+    $(document).ready(function(){
+        $('.btn-close').click(function(){
+            $(".modal-backdrop").remove();
         });
+    });
  //Ajax call to delete user when delete button is click       
     $('body').on('click','.deleteUser', function(){
         let user_id = $(this).data("id");

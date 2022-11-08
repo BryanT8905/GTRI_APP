@@ -57,6 +57,7 @@
                 <input id="password-confirm"  type="password"  placeholder="Confirm Password"class="form-control" name="password_confirmation" required autocomplete="new-password">
         </div>
         <div class="col-md-6 mb-4">
+            <h6>Roles/Permissions</h6>
             @foreach($roles as $role)
                 <div class="form-check">
                     <input class="form-check-input" name="roles[]" type="checkbox" value="{{ $role->id}}" id="{{$role->name}}">

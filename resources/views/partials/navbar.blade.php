@@ -1,9 +1,9 @@
 @include('partials.modal')
 
 
-<nav class="navbar navbar-expand-lg py-0 navbar-dark bg-dark fixed-top mb-3">
-    <a class="navbar-brand mx-1" href="{{ route('home') }}">
-          <img src="{{asset('img/gtri-logo.jpg')}}" width="60" height="60" class="mx-2 d-inline-block align-top" alt="">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark  mb-0 fixed-top">
+    <a class="navbar-brand mx-0" href="{{ route('home') }}">
+          <img src="{{asset('img/gtri-logo.jpg')}}" width="60" height="60" class="mx-0 pb-0 d-inline-block align-top" alt="">
           Web Application
     </a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -12,14 +12,11 @@
     <button type="submit"><i class="fa fa-search"></i></button>
     </form>
 
-    
-
-
     <ul class="navbar-nav">
         <li class="nav-item active">
          @if(Auth::user()->image)
             <div>
-                <img class="image rounded-circle" src="{{asset('/storage/images/'.Auth::user()->image)}}" alt="profile_image" style="width: 40px;height: 40px; padding: 10px; margin: 0px; ">
+                <img class="image rounded-circle" src="{{asset('/storage/images/'.Auth::user()->image)}}" alt="profile_image" style="width: 60px; height: 60px; padding: 10px; margin: 0px; ">
             </div>
          @else
             <div >
@@ -33,7 +30,7 @@
                     Welcome {{ Auth::user()->name }}!
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a data-toggle="modal" class="dropdown-item" id="profileButton" data-target="#profileModal" data-attr="{{ route('user.index')}}" data-original-title="profile" class="btn btn-success btn-xl " role="button">
+                        <a data-toggle="modal" class="dropdown-item" id="profileButton" data-target="#profileModal" data-attr="{{ route('profiles.edit', Auth::user())}}" data-original-title="profile" class="btn btn-success btn-xl " role="button">
                         <iconify-icon icon="ri:profile-fill" width="20" height="20"></iconify-icon>
                         View Profile</a>
 
@@ -65,7 +62,7 @@
     </nav>
     <script>
     $(function () { 
-        //Call to load edit user modal        
+        //Call to load profile modal        
         $(document).on('click', '#profileButton', function(event) {
             event.preventDefault();
             let href = $(this).attr('data-attr');

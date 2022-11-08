@@ -3,11 +3,14 @@
 @section('content')
 
     <!-- Dashboard BEGIN -->
-    <div id="mainPage" class=" px-5 h-100 mainPageExpanded" style="padding-top: 110px ;">
+    <div id="mainPage" class="mb-5 px-0 py-5 mt-5 mainPageExpanded" >
 
       <!-- Title -->
       <div class="d-sm-flex mb-4">
-          <h3>Dashboard</h3>
+        @can('isAdmin') 
+        <h3>Admin</h3>
+        @endcan    
+        <h3 class="mx-2">Dashboard</h3>
       </div>
 
       <!-- Example Explanation -->

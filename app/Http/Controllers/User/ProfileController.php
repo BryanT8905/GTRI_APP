@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -23,7 +26,7 @@ class ProfileController extends Controller
    
      public function index()
     {
-        return view('user.profiles');
+        return view('user.profiles.edit');
     }
     
 
@@ -45,7 +48,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         //
     }
 
     /**
@@ -65,9 +68,11 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+
+       $user = Auth::user();
+       return view('user.profiles.edit',compact('user'));
     }
 
     /**
@@ -77,9 +82,39 @@ class ProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+     
+        $user = Auth::user();
+
+        $data = $this->validate($request, [
+            'name' => 'required',
+            'username'=>'required',
+            'email' => 'required',
+            'image' => 'file|image|max:1500',
+
+        ]);
+         if($request->hasFile('image')){
+            $data['image'] = $request->file('image');
+            $extension = $data['image']->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $data['image']->move('storage/images', $filename);
+            $user->image = $filename;
+
+        }
+
+
+
+        $user->name = $data['name'];
+        $user->username=$data['username'];
+        $user->email = $data['email'];
+       
+       
+
+        $request->session()->flash('success', 'Profile Updated!'); 
+
+        $user->save();
+        return back();
     }
 
     /**

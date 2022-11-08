@@ -23,6 +23,6 @@ class AdminRules
            return $next($request);
 
         }
-        return redirect('home');
+        return redirect('home')->with('error', 'You must be an administrator to manage users');
     }
 }
