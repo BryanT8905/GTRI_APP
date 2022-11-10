@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+//Migration for adding the image column to the users table
 return new class extends Migration
 {
     /**
@@ -15,7 +16,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
                 if (!Schema::hasColumn('users', 'image')){
-                  $table->string('image')->default('user.png');
+                  $table->string('image')->nullable();
                 };
         });
     }
@@ -28,7 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn('image');
         });
     }
 };

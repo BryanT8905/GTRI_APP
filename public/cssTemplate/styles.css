@@ -1,0 +1,278 @@
+
+*{
+  box-sizing: border-box;
+}
+
+
+body {
+  text-align: center;
+}
+
+/* div that contains the side bar
+ .left{
+    float: left;
+    position: absolute;
+    width: 78px;
+    height: 170%;
+    margin-right: -200px;
+    z-index: 2;
+}
+
+div that contains the main content area 
+.right{   
+  float: left;
+    width: 100%;
+    height: 170%;
+    padding-top: 20px;
+    position: absolute;
+    z-index: 1;
+    
+}
+*/
+
+  /* Style the search field */
+  form.search input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    background: #f1f1f1;
+  }
+  /* Style the submit button */
+  form.search button {
+    float: left;
+    width: 20%;
+    padding: 10px;
+    background: #B29A59;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+  }
+  form.search button:hover {
+    background: #0b7dda;
+  }
+  /* Clear floats */
+  form.search::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .nav-pills > li > a {
+     border-radius: 0;
+  }
+  #wrapper {
+     padding-left: 0;
+     -webkit-transition: all 0.5s ease;
+     -moz-transition: all 0.5s ease;
+     -o-transition: all 0.5s ease;
+     transition: all 0.5s ease;
+     overflow: hidden;
+  }
+  #wrapper.toggled {
+     padding-left: 250px;
+     overflow: hidden;
+  }
+ 
+ /* #sidebar-container {
+      height: 100%;
+  }*/
+  
+#body-row {
+    margin-left:0;
+    margin-right:0;
+}
+#sidebar-container {
+    min-height: 100vh;
+    background-color: #333;
+    padding: 0;
+    position:fixed;
+    top:85px;
+    bottom:0;
+    left:0;
+    display:block;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+  #sidebar-container::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  #sidebar-container::-webkit-scrollbar-thumb {
+    background-color:#B29A59;
+    border-radius: 12px;
+    transition: all 0.15s ease-in-out;
+  }
+  #sidebar-container::-webkit-scrollbar-thumb:hover {
+    background-color:#f4d275;
+  }
+  #sidebar-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Sidebar sizes when expanded and expanded */
+  .sidebar-expanded {
+      width: 230px;
+  }
+  .sidebar-collapsed {
+      width: 70px;
+  }
+  /* Menu item*/
+  #sidebar-container .list-group a {
+      height: 50px;
+      color: white;
+  }
+
+  /* Submenu item*/
+  #sidebar-container .list-group .sidebar-submenu a {
+      height: 45px;
+      padding-left: 30px;
+  }
+
+  .sidebar-submenu {
+      font-size: 0.9rem;
+  }
+  /* Closed submenu icon */
+  #sidebar-container .list-group .list-group-item[aria-expanded="false"] .submenu-icon::after {
+    content: " \f0d7";
+    font-family: FontAwesome;
+    display: inline;
+    text-align: right;
+    padding-left: 10px;
+    height: 40px;
+    width: 40px;
+  }
+  /* Opened submenu icon */
+  #sidebar-container .list-group1 .list-group-item[aria-expanded="true"] .submenu-icon::after {
+    content: " \f0da";
+    font-family: FontAwesome;
+    display: inline;
+    text-align: right;
+    padding-left: 10px;
+  }
+
+
+  /* Separators */
+  .sidebar-separator-title {
+      background-color: #333;
+      height: 35px;
+  }
+  .sidebar-separator {
+      background-color: #333;
+      height: 25px;
+  }
+  .logo-separator {
+      background-color: #333;
+      height: 60px;
+  }
+
+  /* All main page content away from the navbars goes in a div with this class */
+  .mainPageCollapsed{
+    margin-left:5vw;
+    width:100%;
+  }
+  .mainPageExpanded{
+    margin-left:16vw;
+    width:83%;
+  }
+ /* All user management(index.php) content away from the navbars goes in a div with this class */
+  .indexPageCollapsed{
+    margin-left:5vw;
+    width:100%;
+    
+  }
+  .indexPageExpanded{
+    margin-left:16vw;
+    width:83%;
+  }
+
+
+  /* highlights active tab on side nav */
+.list-group-item.active {
+  background-color: #B29A59 !important;
+  border-color: #433610 !important;
+}
+
+/* These media queries keep the main page content from cutting into the navbar at smaller screen-widths */
+@media screen and (max-width: 1448px) {
+  .mainPageExpanded{
+    margin-left:18vw;
+  }
+}
+@media screen and (max-width: 1248px) {
+  .mainPageExpanded{
+    margin-left:24vw;
+  }
+}
+@media screen and (max-width: 945px) {
+  .mainPageExpanded{
+    margin-left:30vw;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .mainPageCollapsed{
+    margin-left:10vw;
+  }
+}
+@media screen and (max-width: 760px) {
+  .mainPageExpanded{
+    margin-left:5vw;
+    width:90%;
+  }
+  .mainPageCollapsed{
+    margin-left:5vw;
+  }
+}
+
+/* These media queries keep the main page content from cutting into the navbar at smaller screen-widths */
+@media screen and (max-width: 1448px) {
+  .indexPageExpanded{
+    margin-left:18vw;
+  }
+}
+@media screen and (max-width: 1248px) {
+  .indexPageExpanded{
+    margin-left:24vw;
+  }
+}
+@media screen and (max-width: 945px) {
+  .indexPageExpanded{
+    margin-left:30vw;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .indexPageCollapsed{
+    margin-left:10vw;
+  }
+}
+@media screen and (max-width: 760px) {
+  .indexPageExpanded{
+    margin-left:5vw;
+    width:90%;
+  }
+  .indexPageCollapsed{
+    margin-left:5vw;
+  }
+}
+
+
+@media screen {
+    .dataElement{
+        border:1px solid #D9D9D9;
+        border-radius:10px;
+        height:275px;
+        padding:25px;
+        background-color:#EDEAEA;
+      }
+}
+
+
+
+
+  
+
+

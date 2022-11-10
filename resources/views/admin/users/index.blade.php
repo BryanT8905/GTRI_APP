@@ -1,60 +1,159 @@
-<!--This is the main user managemnt page view which shows the users table-->
+<!--This is the main user management page view which shows the users table-->
 @extends('layout.app')
 
 @section('content')
 
-    <div class="pt-5 pb-5 align-items-center justify-content-center d-flex" style= "width: 40%;">
-    <!-- create user button -->
-    <a href="{{ route('users.create')}}" class="btn btn-info float-start" role="button">Create User</a>  
-    </div>
-    
-    <!-- create table -->
-    <div class=" container align-items-center justify-content-center d-flex ">
-        <table style= "width: 100%;" class="table table-striped table-responsive-lg ">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">User_Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">UserName</th>
-                    <th scope="col">Email</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- add mySQL data to table -->
-                @foreach($users as $user)
-                 <tr>
-                    <th scope="row" >{{$user->id}}</th>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->username}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info" role="button">Edit</a>
-                    </td>
-                    
-                    <!--delete user, confirm before delete-->
-                    <td class="col-lg-1">
-                        <button class="btn btn-sm btn-danger btn-danger btn-flat show_confirm" data-toggle="tooltip" 
-                        onclick="confirm('Are you sure you want to remove the user from this group?') || e.stopImmediatePropagation(); 
-                        document.getElementById('delete-user-{{$user->id}}').submit()">Delete</button>
-                            <form id="delete-user-{{$user->id}}" action="{{ route('users.destroy', $user->id)}}" method="POST"
-                                style="display:none">
-                                @csrf
-                                @method("DELETE")
-                               
-                            </form>
-                        </td>
-                    </tr>
-                 @endforeach
-            </tbody>
-        </table>
+<div id="indexPage" class="mb-5 px-0 py-5 mt-5 indexPageExpanded" >
 
+<div class="d-sm-flex mb-4"> 
+<h3>Current Users</h3> 
+</div>
+<div>
+<!-- create user button -->
+    <a data-toggle="modal" id="userButton" data-target="#userModal" data-attr="{{ route('users.create')}}" data-original-title="create" class="btn btn-success btn-md mx-2 py-1" role="button">Create User</a>
+    <p class="small px-2 py-3"><a class="text-black"  href="{{ url('permissions') }}" >View Permissions</a></p>
+
+
+<!--datatables user table--> 
+    <div class="container row pt-2">
+        <div class="col">
+            <table class="table dt-responsive table-striped user_datatable shadow-sm" style="width:100%;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Department</th>
+                        <th width="100px py-0 px-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
         </div>
-        <div class="pt-5 pb-5 align-items-center justify-content-center w-100 d-flex">
-         <!--pagination -->
-        {{ $users->links() }}
+    </div>
+</div>
+
+<!-- Modal for creating and editing users. Dynamically loads create and edit forms -->
+<div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+  <div class="modal-dialog bg-light modal-user modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn btn-secondary btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="userBody">
+      </div>
+      <div class="row mb-5 mx-3">
+        <div class="d-flex justify-content-right ml-5 align-items-right">
+            <button type="button" class="btn btn-outline-secondary btn-md btnCancel" data-bs-dismiss="modal">Cancel</button>
         </div>
-       
-     
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/javascript">
+// AJAX call to populate datatable
+$(function () {
+    $.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
+    let table = $('.user_datatable').DataTable({
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('users.index') }}",
+        columns: [
+            {data: 'id', name: 'id'},
+            {data: 'name', name: 'name'},
+            {data: 'username', name: 'username'},
+            {data: 'email', name: 'email'},
+            {data: 'department', name: 'department'},
+            {data: 'action', name: 'action', orderable: false, searchable: false},
+        ]
+    });
+
+
+//Ajax call to load the create user modal
+  $(document).on('click', '#userButton', function(event) {
+            event.preventDefault();
+            let href = $(this).attr('data-attr');
+            $.ajax({
+                url: href,
+                success: function(result) {
+                    $('#userModal').modal("show");
+                    $('#userBody').html(result).show();
+                    
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    alert("Page " + href + " cannot open. Error:" + error);
+                    $('#loader').hide();
+                },
+                timeout: 8000
+                
+            })
+        });
+//Call to load edit user modal        
+        $(document).on('click', '.editUser', function(event) {
+            event.preventDefault();
+            let href = $(this).attr('data-attr');
+            $.ajax({
+                url: href,
+                success: function(result) {
+                    $('#userModal').modal("show");
+                    $('#userBody').html(result).show();
+                    
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    alert("Page " + href + " cannot open. Error:" + error);
+                    
+                },
+                timeout: 8000
+
+            })
+        });
+ //Calls to remove modal backdrop when cancel button and close(x) icon buttton is clicked in the modal       
+    $(document).ready(function(){
+        $('.btnCancel').click(function(){
+            $(".modal-backdrop").remove();
+        });
+    });
+
+    $(document).ready(function(){
+        $('.btn-close').click(function(){
+            $(".modal-backdrop").remove();
+        });
+    });
+ //Ajax call to delete user when delete button is click       
+    $('body').on('click','.deleteUser', function(){
+        let user_id = $(this).data("id");
+        let token = $("meta[name='csrf-token']").attr("content");
+        if(confirm("Are you sure you want to delete this user?")==true){
+            $.ajax({
+            type:"post",
+            url: "{{ route('users.store') }}"+'/'+user_id,
+            data: {
+                _token: token,
+                _method: 'DELETE',
+                id: user_id,
+            },
+
+            success:function(data){
+                table.draw();
+                swal.fire("User Deleted");
+                
+            }
+            
+        })
+        } 
+    });
+});
+
+</script>
 @endsection
 

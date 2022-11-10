@@ -17,12 +17,12 @@ class AdminRules
      */
     public function handle(Request $request, Closure $next)
     {
-        
+      //we can use this custom middleware to apply to adminroute group  
         if(Gate::allows('isAdmin')){
             
            return $next($request);
 
         }
-        return redirect('home');
+        return redirect('home')->with('error', 'You must be an administrator to manage users');
     }
 }
