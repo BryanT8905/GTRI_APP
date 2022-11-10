@@ -18,7 +18,7 @@ class RoleSeeder extends Seeder
     {
         //Hardcode roles using DB facade
         DB::table('roles')->insert([
-            'name' => 'Admin'
+            'name' => 'IT Administrator'
         ]);
 
         DB::table('roles')->insert([
@@ -27,6 +27,10 @@ class RoleSeeder extends Seeder
 
         DB::table('roles')->insert([
             'name' => 'Manager'
+        ]);
+
+        DB::table('roles')->insert([
+            'name' => 'Technical Support'
         ]);
     }
 }
