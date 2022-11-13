@@ -97,6 +97,7 @@ div that contains the main content area
     display:block;
     overflow-x:hidden;
     overflow-y:auto;
+    z-index:1;
 }
   #sidebar-container::-webkit-scrollbar {
     width: 10px;
@@ -174,22 +175,13 @@ div that contains the main content area
   .mainPageCollapsed{
     margin-left:5vw;
     width:100%;
+    z-index:-1;
   }
   .mainPageExpanded{
     margin-left:16vw;
     width:83%;
+    z-index:-1;
   }
- /* All user management(index.php) content away from the navbars goes in a div with this class */
-  .indexPageCollapsed{
-    margin-left:5vw;
-    width:100%;
-    
-  }
-  .indexPageExpanded{
-    margin-left:16vw;
-    width:83%;
-  }
-
 
   /* highlights active tab on side nav */
 .list-group-item.active {
@@ -202,23 +194,29 @@ div that contains the main content area
   .mainPageExpanded{
     margin-left:18vw;
   }
+  .mainPageCollapsed{
+    margin-left:10vw;
+  }
 }
-@media screen and (max-width: 1248px) {
+@media screen and (max-width: 1300px) {
   .mainPageExpanded{
     margin-left:24vw;
   }
 }
-@media screen and (max-width: 945px) {
+@media screen and (max-width: 970px) {
   .mainPageExpanded{
     margin-left:30vw;
   }
 }
 @media screen and (max-width: 1000px) {
   .mainPageCollapsed{
-    margin-left:10vw;
+    margin-left:20vw;
   }
 }
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 777px) {
+  #sidebar-container{
+    display:none;
+  }
   .mainPageExpanded{
     margin-left:5vw;
     width:90%;
@@ -227,38 +225,6 @@ div that contains the main content area
     margin-left:5vw;
   }
 }
-
-/* These media queries keep the main page content from cutting into the navbar at smaller screen-widths */
-@media screen and (max-width: 1448px) {
-  .indexPageExpanded{
-    margin-left:18vw;
-  }
-}
-@media screen and (max-width: 1248px) {
-  .indexPageExpanded{
-    margin-left:24vw;
-  }
-}
-@media screen and (max-width: 945px) {
-  .indexPageExpanded{
-    margin-left:30vw;
-  }
-}
-@media screen and (max-width: 1000px) {
-  .indexPageCollapsed{
-    margin-left:10vw;
-  }
-}
-@media screen and (max-width: 760px) {
-  .indexPageExpanded{
-    margin-left:5vw;
-    width:90%;
-  }
-  .indexPageCollapsed{
-    margin-left:5vw;
-  }
-}
-
 
 @media screen {
     .dataElement{

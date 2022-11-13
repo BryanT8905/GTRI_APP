@@ -134,7 +134,6 @@ function SidebarCollapse () {
     $('.submenu-icon').toggleClass('d-none');
     $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
     $('#mainPage').toggleClass('mainPageCollapsed mainPageExpanded');
-    $('#indexPage').toggleClass('indexPageCollapsed indexPageExpanded');
 
 
     // Treating d-flex/d-none on separators with title

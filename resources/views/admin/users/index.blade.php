@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div id="indexPage" class="mb-5 px-0 py-5 mt-5 indexPageExpanded" >
+<div id="mainPage" class="mb-5 px-0 py-5 mt-5 mainPageExpanded" >
 
 <div class="d-sm-flex mb-4"> 
 <h3>Current Users</h3> 
