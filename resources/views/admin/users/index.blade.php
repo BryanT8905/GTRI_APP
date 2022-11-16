@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div id="indexPage" class="mb-5 px-0 py-5 mt-5 indexPageExpanded" >
+<div id="mainPage" class="mb-5 px-0 py-5 mt-5 mainPageExpanded" >
 
 <div class="d-sm-flex mb-4"> 
 <h3>Current Users</h3> 
@@ -11,7 +11,6 @@
 <div>
 <!-- create user button -->
     <a data-toggle="modal" id="userButton" data-target="#userModal" data-attr="{{ route('users.create')}}" data-original-title="create" class="btn btn-success btn-md mx-2 py-1" role="button">Create User</a>
-    <p class="small px-2 py-3"><a class="text-black"  href="{{ url('permissions') }}" >View Permissions</a></p>
 
 
 <!--datatables user table--> 

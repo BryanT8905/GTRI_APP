@@ -8,27 +8,6 @@ body {
   text-align: center;
 }
 
-/* div that contains the side bar
- .left{
-    float: left;
-    position: absolute;
-    width: 78px;
-    height: 170%;
-    margin-right: -200px;
-    z-index: 2;
-}
-
-div that contains the main content area 
-.right{   
-  float: left;
-    width: 100%;
-    height: 170%;
-    padding-top: 20px;
-    position: absolute;
-    z-index: 1;
-    
-}
-*/
 
   /* Style the search field */
   form.search input[type=text] {
@@ -97,6 +76,7 @@ div that contains the main content area
     display:block;
     overflow-x:hidden;
     overflow-y:auto;
+    z-index:1;
 }
   #sidebar-container::-webkit-scrollbar {
     width: 10px;
@@ -172,24 +152,14 @@ div that contains the main content area
 
   /* All main page content away from the navbars goes in a div with this class */
   .mainPageCollapsed{
-    margin-left:5vw;
+    margin-left:10vw;
     width:100%;
+    z-index:-1;
   }
   .mainPageExpanded{
     margin-left:16vw;
     width:83%;
   }
- /* All user management(index.php) content away from the navbars goes in a div with this class */
-  .indexPageCollapsed{
-    margin-left:5vw;
-    width:100%;
-    
-  }
-  .indexPageExpanded{
-    margin-left:16vw;
-    width:83%;
-  }
-
 
   /* highlights active tab on side nav */
 .list-group-item.active {
@@ -203,19 +173,19 @@ div that contains the main content area
     margin-left:18vw;
   }
 }
-@media screen and (max-width: 1248px) {
+@media screen and (max-width: 1300px) {
   .mainPageExpanded{
     margin-left:24vw;
   }
 }
-@media screen and (max-width: 945px) {
+@media screen and (max-width: 970px) {
   .mainPageExpanded{
     margin-left:30vw;
   }
 }
 @media screen and (max-width: 1000px) {
   .mainPageCollapsed{
-    margin-left:10vw;
+    margin-left:20vw;
   }
 }
 @media screen and (max-width: 760px) {
@@ -228,36 +198,6 @@ div that contains the main content area
   }
 }
 
-/* These media queries keep the main page content from cutting into the navbar at smaller screen-widths */
-@media screen and (max-width: 1448px) {
-  .indexPageExpanded{
-    margin-left:18vw;
-  }
-}
-@media screen and (max-width: 1248px) {
-  .indexPageExpanded{
-    margin-left:24vw;
-  }
-}
-@media screen and (max-width: 945px) {
-  .indexPageExpanded{
-    margin-left:30vw;
-  }
-}
-@media screen and (max-width: 1000px) {
-  .indexPageCollapsed{
-    margin-left:10vw;
-  }
-}
-@media screen and (max-width: 760px) {
-  .indexPageExpanded{
-    margin-left:5vw;
-    width:90%;
-  }
-  .indexPageCollapsed{
-    margin-left:5vw;
-  }
-}
 
 
 @media screen {

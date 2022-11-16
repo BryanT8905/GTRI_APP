@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\ChangePasswordController;
 use App\Http\Controllers\Tools\AssetController;
 use App\Http\Middleware;
 
@@ -50,7 +51,10 @@ Route::middleware(['auth'])->group(function (){
 
 });
 
+Route::middleware(['auth'])->group(function (){
+    Route::resource('user/passwords', ChangepasswordController::class);
 
+});
 
 Route::view('tools/permissions', 'tools.permissions')->middleware('auth');
 

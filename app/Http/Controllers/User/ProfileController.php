@@ -12,17 +12,17 @@ class ProfileController extends Controller
 {
 
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-   
-   
     public function __construct()
     {
         $this->middleware('auth');
     }
+
+    
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
    
      public function index()
     {
@@ -30,38 +30,7 @@ class ProfileController extends Controller
     }
     
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-         //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
+ 
     /**
      * Show the form for editing the specified resource.
      *
@@ -102,29 +71,14 @@ class ProfileController extends Controller
             $user->image = $filename;
 
         }
-
-
-
         $user->name = $data['name'];
         $user->username=$data['username'];
         $user->email = $data['email'];
        
-       
-
         $request->session()->flash('success', 'Profile Updated!'); 
 
         $user->save();
         return back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

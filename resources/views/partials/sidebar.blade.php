@@ -7,7 +7,7 @@
         <ul class="list-group py-0">
           <!-- Separator with title -->
           <li class="sidebar-separator-title text-muted d-flex align-items-center mx-0 menu-collapsed" style="height:40px ;">
-            <small>MAIN MENU</small>
+            <small class="mx-1">MAIN MENU</small>
           </li>
           <!-- /END Separator -->
           <!-- Menu with submenu -->
@@ -134,7 +134,7 @@ function SidebarCollapse () {
     $('.submenu-icon').toggleClass('d-none');
     $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
     $('#mainPage').toggleClass('mainPageCollapsed mainPageExpanded');
-    $('#indexPage').toggleClass('indexPageCollapsed indexPageExpanded');
+
 
 
     // Treating d-flex/d-none on separators with title
