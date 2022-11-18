@@ -46,7 +46,7 @@ Route::middleware(['auth'])->group(function (){
 
 });
 
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth', 'auth.manageAssets'])->group(function (){
     Route::resource('tools/assets', AssetController::class);
 
 });
