@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
-class AdminRules
+class ManageAssets
 {
     /**
      * Handle an incoming request.
@@ -17,12 +17,12 @@ class AdminRules
      */
     public function handle(Request $request, Closure $next)
     {
-      //we can use this custom middleware to apply to adminroute group  
-        if(Gate::allows('isAdmin')){
+        if(Gate::allows('manageAssets')){
             
-           return $next($request);
-
+            return $next($request);
+              
         }
-        return back()->with('error', 'You must be an administrator to manage users');
+        return back()->with('error', 'You are not authorized for Asset Management');     
+        
     }
 }

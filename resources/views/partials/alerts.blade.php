@@ -27,3 +27,16 @@
      }).catch(swal.noop);
  </script>
  @endif
+
+ @if(Session::has('invalid'))
+  <script type="text/javascript">
+     Swal.fire({
+         title:'Error',
+         text:"{{Session::get('invalid')}}",
+         timer:5000,
+         type:'error'
+     }).then((value) => {
+       //location.reload();
+     }).catch(swal.noop);
+ </script>
+ @endif

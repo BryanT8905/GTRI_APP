@@ -3,11 +3,10 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark  mb-0 fixed-top">
     <a class="navbar-brand mx-0" href="{{ route('home') }}">
-          <img src="{{asset('img/gtri-logo.jpg')}}" width="60" height="60" class="mx-0 pb-0 d-inline-block align-top" alt="">
-          Web Application
-    </a>
+          <img src="{{asset('img/logo-gold.png')}}" width="100" height="60" class="mx-4 mt-0 d-inline-block align-top" alt="">
+</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <form class="search form-inline mx-auto my-2" action="action_page.php">
+    <form class="search form-inline mx-auto my-2" style="padding-left:160px ;"  action="action_page.php">
     <input type="text" placeholder="Search" name="search">
     <button type="submit"><i class="fa fa-search"></i></button>
     </form>
@@ -34,7 +33,11 @@
                         <iconify-icon icon="ri:profile-fill" width="20" height="20"></iconify-icon>
                         View Profile</a>
 
-                        <a href="{{ route('home') }}" class="dropdown-item ">
+                        <a data-toggle="modal" class="dropdown-item" id="changePasswordButton" data-target="#changePasswordModal" data-attr="{{ route('passwords.edit', Auth::user())}}" data-original-title="changePassword" class="btn btn-success btn-xl " role="button">
+                        <iconify-icon icon="carbon:password" width="20" height="20"></iconify-icon>
+                        Change Password</a>
+
+                        <a href="#" class="dropdown-item ">
                         <iconify-icon icon="clarity:grid-view-solid" width="20" height="20"></iconify-icon>
                         Change Dashboard View</a>
 
@@ -62,8 +65,28 @@
     </nav>
     <script>
     $(function () { 
-        //Call to load profile modal        
+//Call to load profile modal        
         $(document).on('click', '#profileButton', function(event) {
+            event.preventDefault();
+            let href = $(this).attr('data-attr');
+            $.ajax({
+                url: href,
+                success: function(result) {
+                    $('#userModal').modal("show");
+                    $('#userBody').html(result).show();
+                    
+                },
+                error: function(jqXHR, testStatus, error) {
+                    console.log(error);
+                    alert("Page " + href + " cannot open. Error:" + error);
+                    
+                },
+                timeout: 8000
+
+            })
+        });
+//Call to load change password modal        
+           $(document).on('click', '#changePasswordButton', function(event) {
             event.preventDefault();
             let href = $(this).attr('data-attr');
             $.ajax({

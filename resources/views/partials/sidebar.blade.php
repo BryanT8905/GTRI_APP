@@ -7,7 +7,7 @@
         <ul class="list-group py-0">
           <!-- Separator with title -->
           <li class="sidebar-separator-title text-muted d-flex align-items-center mx-0 menu-collapsed" style="height:40px ;">
-            <small>MAIN MENU</small>
+            <small class="mx-1">MAIN MENU</small>
           </li>
           <!-- /END Separator -->
           <!-- Menu with submenu -->
@@ -20,7 +20,7 @@
             </a>
           </li>
 
-          <li>  
+          <li>
             <a href="#" class="bg-dark list-group-item list-group-item-action {{Request::is('') ? 'active':''}}">
               <div class="d-flex w-100 justify-content-start align-items-center">
                 <span class="iconify fa-fw mx-1" data-icon="file-icons:microsoft-project" data-width="30" data-height="30"></span>
@@ -43,7 +43,7 @@
               </div>
             </a>
 
-          <li> 
+          <li>
             <a href="{{url('#submenu2')}}" data-toggle="collapse" aria-expanded="false" class="bg-dark list-group-item list-group-item-action flex-column align-items-start {{Request::is('admin/*', 'tools/*') ? 'active':''}}">
               <div class="d-flex w-100 justify-content-start align-items-center">
                   <span class="iconify fa-fw mx-1" data-icon="codicon:tools" data-width="30" data-height="30"></span>
@@ -51,16 +51,16 @@
                    <span class="submenu-icon ml-auto"></span>
                </div>
             </a>
-          </li>  
+          </li>
             <!-- Submenu content -->
 
-           
+
             <div id='submenu2' class="collapse sidebar-submenu">
             <li>
                 <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action bg-dark text-white {{Request::is('admin/users') ? 'active':''}}">
                 <span class="menu-collapsed text-align-center ">User Management</span>
                 </a>
-            </li>  
+            </li>
               <a href="{{ route('assets.index') }}" class="list-group-item list-group-item-action bg-dark text-white {{Request::is('tools/assets') ? 'active':''}}">
                 <span class="menu-collapsed">Asset Management</span>
               </a>
@@ -108,7 +108,7 @@
 
         </ul>
          <!-- List Group END-->
-     
+
     </div>
 
     <!-- Side Nav Bar Complete -->
@@ -124,7 +124,7 @@ $('#collapse-icon').addClass('fa-angle-double-left');
 $(document).ready(function(){
   $('[data-toggle=sidebar-colapse]').click(function() {
     SidebarCollapse();
-  })  
+  })
 });
 
 
@@ -134,6 +134,7 @@ function SidebarCollapse () {
     $('.submenu-icon').toggleClass('d-none');
     $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
     $('#mainPage').toggleClass('mainPageCollapsed mainPageExpanded');
+
 
 
     // Treating d-flex/d-none on separators with title

@@ -85,21 +85,21 @@
         <tr>
             <th class="py-3" scope="row">Create</th>
             <td class="px-5"><i class="fa fa-check text-primary" aria-hidden="true"></i></td>
-            <td></td>
+            <td class="px-5"><i class="fa fa-check text-primary" aria-hidden="true"></i></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
             <th class="py-3" scope="row">Edit</th>
             <td class="px-5"><i class="fa fa-check text-primary" aria-hidden="true"></i></td>
-            <td></td>
+            <td class="px-5"><i class="fa fa-check text-primary" aria-hidden="true"></i></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
             <th class="py-3" scope="row">Delete</th>
             <td class="px-5"><i class="fa fa-check text-primary" aria-hidden="true"></i></td>
-            <td></td>
+            <td class="px-5"><i class="fa fa-check text-primary" aria-hidden="true"></i></td>
             <td></td>
             <td></td>
             </tr>
